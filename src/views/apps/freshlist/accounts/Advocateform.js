@@ -2,19 +2,10 @@ import React from "react";
 import { Link } from 'react-router-dom';
 
 import {
-    Card,
-    CardBody,
-    Input,
     Label,
-    Row,
     CustomInput,
     Col,
-    Form,
-    UncontrolledDropdown,
-    DropdownMenu,
-    DropdownItem,
-    DropdownToggle,
-    Button,
+ 
 } from "reactstrap";
 import UserContext from "../../../../context/Context";
 
@@ -34,191 +25,29 @@ class Advocateform extends React.Component {
     static contextType = UserContext;
 
     state = {
-        rowData: [],
         Court: [],
+        list:[],
+        selectedCategory:"",
+        finalCategory:"",
+        selectedSubCategory:"",
+        subCategories:[],
         CourtName:"",
         name:[],
-        Viewpermisson: null,
-        Editpermisson: null,
-        Createpermisson: null,
-        Deletepermisson: null,
-        paginationPageSize: 20,
-        currenPageSize: "",
-        getPageSize: "",
-        defaultColDef: {
-            sortable: true,
-            // editable: true,
-            resizable: true,
-            suppressMenu: true,
-        },
-        columnDefs: [
-            {
-                headerName: "S.No",
-                valueGetter: "node.rowIndex + 1",
-                field: "node.rowIndex + 1",
-                width: 150,
-                filter: true,
-            },
-            {
-                headerName: "Role Name",
-                field: "Name",
-                filter: true,
-                resizable: true,
-                width: 160,
-                cellRendererFramework: (params) => {
-                    return (
-                        <div className="d-flex align-items-center cursor-pointer">
-                            <div className="">
-                                <span>{params?.data}</span>
-                            </div>
-                        </div>
-                    );
-                },
-            },
-
-            {
-                headerName: "Actions",
-                field: "sortorder",
-                field: "transactions",
-                width: 160,
-                cellRendererFramework: (params) => {
-                    return (
-                        <div className="actions cursor-pointer">
-                            {/* {this.state.Viewpermisson && (
-                <BsEye
-                  className="mr-50"
-                  size="25px"
-                  color="green"
-                  onClick={() =>
-                    history.push(
-                      `/app/freshlist/account/updateexistingrole/${params.data.id}`
-                    )
-                  }
-                />
-              )} */}
-
-                            {this.state.Editpermisson && (
-                                <Route
-                                    render={({ history }) => (
-                                        <Edit
-                                            className="mr-50"
-                                            size="25px"
-                                            color="blue"
-                                            onClick={() =>
-                                                history.push({
-                                                    pathname: `/app/freshlist/account/editRole/${params?.data}`,
-                                                    data: params,
-                                                })
-                                            }
-                                        />
-                                    )}
-                                />
-                            )}
-                            {/* {this.state.Deletepermisson && (
-                <BsTrash
-                  className="mr-50"
-                  size="25px"
-                  color="red"
-                  onClick={() => {
-                    this.runthisfunction(params.data.id);
-                  }}
-                />
-              )} */}
-                        </div>
-                    );
-                },
-            },
-        ],
-    };
+   };
     async componentDidMount() {
         await axiosConfig
         .get("/court/view-court")
         .then((response) => {
-          console.log(response.data);
-          this.setState({ Court: response?.data?.Court });
+          console.log(response.data?.Court);
+          this.setState({ list: response.data?.Court });
+        //   this.setState({ subCategoryList: response.data?.Court[0].subCategory });
+
         })
         .catch((error) => {
           console.log(error);
         });
-   
 
-
-
-        let pageparmission = JSON.parse(localStorage.getItem("userData"));
-
-        let newparmisson = pageparmission?.role?.find(
-            (value) => value?.pageName === "Role List"
-        );
-
-        this.setState({ Viewpermisson: newparmisson?.permission.includes("View") });
-        this.setState({
-            Createpermisson: newparmisson?.permission.includes("Create"),
-        });
-        this.setState({
-            Editpermisson: newparmisson?.permission.includes("Edit"),
-        });
-        this.setState({
-            Deletepermisson: newparmisson?.permission.includes("Delete"),
-        });
-
-        const formdata = new FormData();
-        formdata.append("user_id", pageparmission?.Userinfo?.id);
-        formdata.append("role", pageparmission?.Userinfo?.role);
-        await axiosConfig
-            .post("/getrolelist", formdata)
-            .then((response) => {
-                // console.log(response.data?.data);
-                const propertyNames = Object.values(response.data?.data);
-                // console.log(propertyNames);
-                this.setState({ rowData: propertyNames });
-            })
-            .catch((error) => {
-                // console.log(error);
-            });
     }
-
-    runthisfunction(id) {
-        // console.log(id);
-        let selectedData = this.gridApi.getSelectedRows();
-        swal("Warning", "Sure You Want to Delete it", {
-            buttons: {
-                cancel: "cancel",
-                catch: { text: "Delete ", value: "delete" },
-            },
-        }).then((value) => {
-            switch (value) {
-                case "delete":
-                    const formData = new FormData();
-                    formData.append("user_id", id);
-                    this.gridApi.updateRowData({ remove: selectedData });
-                    axiosConfig.post(`/userdelete`, formData).then((response) => { });
-                    break;
-                default:
-            }
-        });
-    }
-    onGridReady = (params) => {
-        this.gridApi = params.api;
-        this.gridColumnApi = params.columnApi;
-        this.setState({
-            currenPageSize: this.gridApi.paginationGetCurrentPage() + 1,
-            getPageSize: this.gridApi.paginationGetPageSize(),
-            totalPages: this.gridApi.paginationGetTotalPages(),
-        });
-    };
-    updateSearchQuery = (val) => {
-        this.gridApi.setQuickFilter(val);
-    };
-
-    filterSize = (val) => {
-        if (this.gridApi) {
-            this.gridApi.paginationSetPageSize(Number(val));
-            this.setState({
-                currenPageSize: val,
-                getPageSize: val,
-            });
-        }
-    };
 
 
     handleCourt = ()=>{
@@ -237,26 +66,45 @@ class Advocateform extends React.Component {
           console.log(error);
         });
         }
-      
-      }
+   }
     
-
-
-
-
 
       changeHandler= (e)=>{
          console.log(e.target.value)
         let {name,value}=e.target
         this.setState({[name]:value})
       }
+      handleCategory= (e)=>{
+        console.log(e.target.value)
+       let {name,value}=e.target
+       this.setState({[name]:value})
+     }
+
+      handleCategoryChange = (e) => {
+        debugger
+        const selectedValue = e.target.value;
+        const selectedName = e.target.options[e.target.selectedIndex].getAttribute("data-name");
+        const [_id, name] = selectedValue.split(":");
+        console.log(selectedName)
+        this.setState({selectedCategory:name})
+        this.setState({finalCategory:selectedName})
+        const selectedCategory = this.state.list.find((ele) => ele._id == _id);
+    
+        if (selectedCategory && selectedCategory.subCategory) {
+          this.setState({subCategories:selectedCategory.subCategory});
+          this.setState({selectedSubCategory:""})
+        } else {
+        this.setState({subCategories:[]})
+        this.setState({selectedSubCategory:""})
+        }
+      };
+   handleSubCategoryChange = (e) => {
+   this.setState({selectedSubCategory:e.target.value})
+  };
 
 
-
-    handleSubmit = (e)=>{
+        handleSubmit = (e)=>{
         e.preventDefault();
-        console.log(this.state)
-        debugger;
         const payload= {
                  name: this.state.name,
                  mobileNo:this.state.phoneNo,
@@ -264,25 +112,23 @@ class Advocateform extends React.Component {
                  services:this.state.services,
                  enrollmentYear:this.state.enrollment,
                  city:this.state.city,
-                 category:this.state.category,
-
-
-
-
-         }
+                 category:this.state.finalCategory,
+                 subCategoryName:this.state.selectedSubCategory,
+                   }
+                   
          axiosConfig
          .post("/advocate/save-advocate", payload)
          .then((response) => {
            console.log(response);
            swal("Successful!", "You clicked the button!", "success");
-         //   this.props.history.push("/advocate/save-advocate");
+           this.props.history.push("/app/Trupee/account/Advocate");
          })
          .catch((error) => {
            console.log(error);
+           swal("Error!", "You did not submit form", "error");
          });
        }
     render() {
-        const { rowData, columnDefs, defaultColDef } = this.state;
         return (
             <>
                 <div >
@@ -297,31 +143,21 @@ class Advocateform extends React.Component {
                 </div>
                     
                  <form onSubmit={this.handleSubmit}>
-                <div className='row mb-3'>
-                <div className='col-sm-8 col-md-8 col-xl-8 col-lg-8'>
-                <label className="form-label ">Court</label>
-                <input type="text" className="form-control" placeholder='Enter Court Name' id="exampleInputEmail1" aria-describedby="emailHelp" onChange={(e)=>this.setState({CourtName:e.target.value})}/>
-           
-                </div>
-                <div className='col-sm-4 col-md-4 col-lg-4 col-xl-4 mt-1'>
-                <button type="button"  onClick={this.handleCourt} className="btn btn-primary ml-1">Add Court</button>
-
-                 </div>
-                </div>
+              
                     <div className='row'>
                         
                         <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
                             
                                 <div className="mb-1">
-                                    <label for="exampleInputEmail1" className="form-label" >Name</label>
-                                    <input type="text" className="form-control" placeholder='Name' name='name' id="exampleInputEmail1" aria-describedby="emailHelp"    onChange={this.changeHandler}/>
+                                    <label for="exampleInputEmail1" className="form-label" >Name *</label>
+                                    <input type="text" required className="form-control" placeholder='Name' name='name' id="exampleInputEmail1" aria-describedby="emailHelp"    onChange={this.changeHandler}/>
                                
                                     </div>
                                 </div>
                                 <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
                                 <div className="mb-1">
-                                    <label className="form-label">Phone No.</label>
-                                    <input type="number" className="form-control" placeholder='Phone No.' name='phoneNo'    onChange={this.changeHandler} />
+                                    <label className="form-label">Phone No. *</label>
+                                    <input type="number" required className="form-control" placeholder='Phone No.' name='phoneNo'    onChange={this.changeHandler} />
                                 </div>
                                 </div>
                                 </div>
@@ -329,16 +165,16 @@ class Advocateform extends React.Component {
                         
                         <div className='col-sm-6 col-md-6 col-lg-6 col-xl-6'>
                                 <div className="mb-1">
-                                    <label className="form-label">Email Id</label>
-                                    <input type="email" className="form-control" placeholder='Email Id'   onChange={this.changeHandler} name='email'aria-describedby="emailHelp" />
+                                    <label className="form-label">Email Id *</label>
+                                    <input type="email" required className="form-control" placeholder='Email Id'   onChange={this.changeHandler} name='email'aria-describedby="emailHelp" />
                                 </div>
                                 
                                         </div>
                                        
                                     
                           <div className='col-sm-6 col-md-6 col-xl-6 col-lg-6'>
-                                    <label className="form-label">Services</label>
-                                    <input type="text" className="form-control " placeholder='Services'  name='services'     onChange={this.changeHandler}/>
+                                    <label className="form-label">Services *</label>
+                                    <input type="text" className="form-control" required  placeholder='Services'  name='services'     onChange={this.changeHandler}/>
     
                                 
                                 </div>
@@ -348,44 +184,63 @@ class Advocateform extends React.Component {
                                 <div className="mb-1">
                                 <div className='row'>
                                 <div className='col-sm-6 col-md-6 col-xl-6 col-lg-6'>
-                                <label  className="form-label">Enrollment Year</label>
-                                <input type="number" className="form-control " placeholder='Enrollment Year' id="exampleInputEmail1" name='enrollment'   onChange={this.changeHandler} />
+                                <label  className="form-label">Enrollment Year *</label>
+                                <input type="number" className="form-control " required placeholder='Enrollment Year' id="exampleInputEmail1" name='enrollment'   onChange={this.changeHandler} />
 
-                            </div>
+                                     </div>
                            
                         
-                            <div className='col-sm-6 col-md-6 col-xl-6 col-lg-6'>
-                                <label className="form-label">City</label>
-                                <input type="text" className="form-control " placeholder='City'  name='city'   onChange={this.changeHandler} />
+                                 <div className='col-sm-6 col-md-6 col-xl-6 col-lg-6'>
+                                <label className="form-label">City*</label>
+                                <input type="text" className="form-control" required placeholder='City'  name='city'   onChange={this.changeHandler} />
 
                             
-                            </div>
+                                 </div> 
+                                 <div className='col-sm-6 col-md-6 col-xl-6 col-lg-6  mt-1'>
+                                 <Label>Category *</Label>
+              <CustomInput
+       type="select"
+       placeholder="Select Category"
+       required
+       name="category"
+       value={this.state.selectedCategory}
+       onChange={this.handleCategoryChange}
+     >
+      <option  value="">Select Category</option>
+      {this.state.list?.map((ele) => (
+         <option key={ele._id} value={ele._id} data-name={ele.name}>
+           {ele.name}
+         </option>
+                    ))}
+     
+     </CustomInput>
+     </div>
+       <div className='col-sm-6 col-md-6 col-xl-6 col-lg-6 mt-1'>
+       <Label>SubCategory *</Label>
+       <CustomInput
+       type="select"
+       required
+       placeholder="Select Category"
+       name="category"
+       value={this.state.selectedSubCategory}
+       onChange={this.handleSubCategoryChange}
+     >
+      <option  value="">Select SubCategoryName</option>
+      {this.state.subCategories?.map((ele) => (
+         <option key={ele._id} value={ele.subCategoryName}>
+           {ele.subCategoryName}
+         </option>
+       ))}
+     
+     </CustomInput>
+     
+     </div>
+
                                 </div>
 
 
-                                    <div className='row mt-2   '>
-                                    <Col lg="6" md="6" className="mb-2">
-                                    <Label>Category</Label>
-                                    <CustomInput
-                                      type="select"
-                                      placeholder="Select Category"
-                                      name="category"
-                                      value={this.state.category}
-                                      onChange={this.changeHandler}
-                                    >
-                                     <option>Select Category</option>
-                                     {this.state.Court && this.state.Court?.map((e,i) => (
-                                        <option value={e?.name} key={i}>
-                                          {e?.name}
-                                        </option>
-                                      ))}
-                                    
-                                    </CustomInput>
-                                  </Col>
-                                        
-                                       
-                                    </div>
-
+    
+         
                                 </div>
                               
 

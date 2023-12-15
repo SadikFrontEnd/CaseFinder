@@ -472,7 +472,7 @@ class NavbarUser extends React.PureComponent {
           <DropdownToggle tag="a" className="nav-link dropdown-user-link">
             <div className="user-nav d-sm-flex d-none">
               <span className="user-name text-bold-600">
-                // {pageparmission?.Userinfo?.full_name}
+               {pageparmission?.Userinfo?.full_name}
                 {/* <div>{pageparmission?.Userinfo?.role}</div> */}
               </span>
               {/* <span className="user-status">{this.state.userData.name}</span> */}

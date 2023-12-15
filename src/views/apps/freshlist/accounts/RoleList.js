@@ -141,7 +141,6 @@ class RoleList extends React.Component {
   }
 
   runthisfunction(id) {
-    debugger;
     // console.log(id);
     let selectedData = this.gridApi.getSelectedRows();
     swal("Warning", "Sure You Want to Delete it", {

@@ -287,8 +287,7 @@ class NavbarUser extends React.PureComponent {
                 className="dropdown-language nav-item"
                 isOpen={this.state.langDropdown}
                 toggle={this.handleLangDropdown}
-                data-tour="language"
-              >
+                data-tour="language">
                 <DropdownToggle tag="a" className="nav-link">
                   {/* <ReactCountryFlag
                   className="country-flag"
@@ -311,8 +310,7 @@ class NavbarUser extends React.PureComponent {
 
         <UncontrolledDropdown
           tag="li"
-          className="dropdown-notification nav-item"
-        >
+          className="dropdown-notification nav-item">
           {/* <DropdownToggle tag="a" className="nav-link nav-link-label">
             <Icon.Bell size={21} />
             <Badge pill color="primary" className="badge-up">
@@ -331,8 +329,7 @@ class NavbarUser extends React.PureComponent {
               className="media-list overflow-hidden position-relative"
               options={{
                 wheelPropagation: false,
-              }}
-            >
+              }}>
               <div className="d-flex justify-content-between">
                 <Media className="d-flex align-items-start">
                   <Media left href="#">
@@ -352,8 +349,7 @@ class NavbarUser extends React.PureComponent {
                   <small>
                     <time
                       className="media-meta"
-                      dateTime="2015-06-11T18:29:20+08:00"
-                    >
+                      dateTime="2015-06-11T18:29:20+08:00">
                       9 hours ago
                     </time>
                   </small>
@@ -378,8 +374,7 @@ class NavbarUser extends React.PureComponent {
                   <small>
                     <time
                       className="media-meta"
-                      dateTime="2015-06-11T18:29:20+08:00"
-                    >
+                      dateTime="2015-06-11T18:29:20+08:00">
                       5 hours ago
                     </time>
                   </small>
@@ -404,8 +399,7 @@ class NavbarUser extends React.PureComponent {
                   <small>
                     <time
                       className="media-meta"
-                      dateTime="2015-06-11T18:29:20+08:00"
-                    >
+                      dateTime="2015-06-11T18:29:20+08:00">
                       Today
                     </time>
                   </small>
@@ -430,8 +424,7 @@ class NavbarUser extends React.PureComponent {
                   <small>
                     <time
                       className="media-meta"
-                      dateTime="2015-06-11T18:29:20+08:00"
-                    >
+                      dateTime="2015-06-11T18:29:20+08:00">
                       Last week
                     </time>
                   </small>
@@ -453,8 +446,7 @@ class NavbarUser extends React.PureComponent {
                   <small>
                     <time
                       className="media-meta"
-                      dateTime="2015-06-11T18:29:20+08:00"
-                    >
+                      dateTime="2015-06-11T18:29:20+08:00">
                       Last month
                     </time>
                   </small>
@@ -472,7 +464,10 @@ class NavbarUser extends React.PureComponent {
           <DropdownToggle tag="a" className="nav-link dropdown-user-link">
             <div className="user-nav d-sm-flex d-none">
               <span className="user-name text-bold-600">
-               {pageparmission?.Userinfo?.full_name}
+
+
+                {pageparmission?.Userinfo?.full_name}
+
                 {/* <div>{pageparmission?.Userinfo?.role}</div> */}
               </span>
               {/* <span className="user-status">{this.state.userData.name}</span> */}

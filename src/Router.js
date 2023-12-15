@@ -335,9 +335,10 @@ const ViewCategory = lazy(() =>
   import("./views/apps/freshlist/category/ViewCategory")
 );
 // Subcategory SubCategoryList
-const SubCategoryList = lazy(() =>
-  import("./views/apps/freshlist/subcategory/SubCategoryList")
-);
+
+// const SubCategoryList = lazy(() =>
+//   import("./views/apps/freshlist/subcategory/SubCategoryList")
+// );
 const Bills = lazy(() => import("./views/apps/freshlist/subcategory/Bills"));
 const InvoiceGenerator = lazy(() =>
   import("./views/apps/freshlist/subcategory/InvoiceGenerator")
@@ -405,6 +406,8 @@ const ViewAdvocate = lazy(() => import("./views/apps/freshlist/accounts/ViewAdvo
 const EditAdvocate = lazy(() => import("./views/apps/freshlist/accounts/EditAdvocate"));
 
 const Advocate = lazy(() => import("./views/apps/freshlist/accounts/Advocate"));
+const SubCategoryList = lazy(() => import("./views/apps/freshlist/accounts/SubCategoryList"));
+
 // INhouseProduct
 const HouseProductList = lazy(() =>
   import("./views/apps/freshlist/house/HouseProductList")
@@ -1306,6 +1309,7 @@ class AppRouter extends React.Component {
           component={EditRole}
         />
           <AppRoute path="/app/Trupee/account/Advocate" component={Advocate} />
+          <AppRoute path="/app/Trupee/account/SubCategoryList" component={SubCategoryList} />
           <AppRoute path="/app/Trupee/account/Pdfform" component={Pdfform} />
           <AppRoute path="/app/Trupee/account/Advocateform" component={Advocateform} />
           <AppRoute path="/app/Trupee/account/AdvocateView/:id" component={ViewAdvocate} />

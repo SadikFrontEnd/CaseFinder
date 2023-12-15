@@ -217,6 +217,22 @@ class Advocate extends React.Component {
           );
         },
       },
+      {
+        headerName: "SubCategory",
+        field: "Subcategory",
+        filter: true,
+        resizable: true,
+        width: 160,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <div className="">
+                <span>{params?.data?.subCategoryName}</span>
+              </div>
+            </div>
+          );
+        },
+      },
       
    
     ],

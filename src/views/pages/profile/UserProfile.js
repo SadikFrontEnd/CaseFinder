@@ -45,6 +45,15 @@ class UserProfile extends React.Component {
   async componentDidMount() {
     // let { id } = this.props.match.params;
     let pageparmission = JSON.parse(localStorage.getItem("userData"));
+    this.setState({
+      name: res?.data?.data?.full_name,
+      email: res?.data?.data?.email,
+      mobile: res?.data?.data?.mobile,
+      password: res?.data?.data?.password,
+      cnfmPassword: res?.data?.data?.password,
+      gstinno: res?.data?.data?.gstin_no,
+      role: res?.data?.data?.role,
+    });
     // console.log(pageparmission?.Userinfo);
     let formdata = new FormData();
     formdata.append("user_id", pageparmission?.Userinfo?.id);

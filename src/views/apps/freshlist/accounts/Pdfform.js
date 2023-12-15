@@ -20,12 +20,14 @@ import UserContext from "../../../../context/Context";
 
 import axiosConfig from "../../../../axiosConfig";
 import { ContextLayout } from "../../../../utility/context/Layout";
+
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import { Eye, Trash2, ChevronDown, Edit, Trash, Edit2 } from "react-feather";
 import { history } from "../../../../history";
 import "../../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../../assets/scss/pages/users.scss";
+import storage from "../firebase";
 import swal from "sweetalert";
 import { Route } from "react-router-dom";
 import { BsEye, BsTrash } from "react-icons/bs";
@@ -38,6 +40,7 @@ class Pdfform extends React.Component {
     Viewpermisson: null,
     Editpermisson: null,
     Createpermisson: null,
+    progress1:"",
     Deletepermisson: null,
     paginationPageSize: 20,
     currenPageSize: "",
@@ -161,6 +164,37 @@ class Pdfform extends React.Component {
       });
   }
 
+   uploadImage = (x) => {
+    if (x !== "") {
+      const uploadTask = storage.ref(`images/${x.name}`).put(x);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          setProgress1(
+            Math.ceil((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+          );
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          storage
+            .ref("images")
+            .child(x.name)
+            .getDownloadURL()
+            .then((url) => {
+              setProgress1(0);
+
+              setPostData({ ...postData, pdf: url });
+            });
+        }
+      );
+    } else {
+      alert("No File selected");
+    }
+  };
+    
   runthisfunction(id) {
     // console.log(id);
     let selectedData = this.gridApi.getSelectedRows();
@@ -205,18 +239,12 @@ class Pdfform extends React.Component {
   };
     onChangeHandler = (event) => {
       console.log(event.target.files[0])
+      this.uploadImage(e.target.files[0])
       this.setState({ selectedFile: event.target.files[0] });
       this.setState({ selectedName: event.target.files[0].name });
       console.log(event.target.files[0]);
     };
-  //   onChangeHandler = (event) => {
-  //     this.setState({ selectedFile: event.target.files });
-  //     this.setState({ selectedName: event.target.files.name });
-  //     console.log(event.target.files);
-  //   };
-  //   changeHandler1 = (e) => {
-  //     this.setState({ status: e.target.value });
-  //   };
+
     changeHandler = (e) => {
       console.log(e.target.value)
       this.setState({ [e.target.name]: e.target.value });
@@ -275,6 +303,21 @@ class Pdfform extends React.Component {
   <div className="mb-3">
     <label for="exampleInputPassword1" className="form-label">PDF Upload</label>
     <input type="file" className="form-control w-75" id="exampleInputPassword1"    onChange={this.onChangeHandler}/>
+    <div
+    style={{
+      height: 3,
+      width: "100%",
+      backgroundColor: "lightgrey",
+    }}
+  >
+    <div
+      style={{
+        height: 3,
+        width: `${progress1}%`,
+        backgroundColor: "green",
+      }}
+    ></div>
+  </div>
   </div>
   </div>
   <div className='col-sm-2 col-md-2 col-lg-2 col-xl-2'>

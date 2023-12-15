@@ -151,7 +151,7 @@ const CreateAccount = () => {
       .post("/createuser", formdata)
       .then((response) => {
         if (response.data?.success) {
-          navigate.push("/app/freshlist/house/userlist");
+          navigate.push("/app/CaseFinder/house/userlist");
           swal("Success!", "Submitted SuccessFull!", "success");
           setAssignRole("");
           setstatus("");

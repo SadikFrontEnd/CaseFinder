@@ -125,7 +125,7 @@ export class AddExorder extends Component {
                     className=" btn btn-danger float-right"
                     onClick={() =>
                       history.push(
-                        "/app/freshlist/order/viewAll/63ae84014915409458789aed"
+                        " /app/CaseFinder/users/User/63ae84014915409458789aed"
                       )
                     }
                   >

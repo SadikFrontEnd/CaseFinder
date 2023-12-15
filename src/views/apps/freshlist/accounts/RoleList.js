@@ -73,7 +73,7 @@ class RoleList extends React.Component {
                       color="blue"
                       onClick={() =>
                        { history.push({
-                          pathname: `/app/freshlist/account/editRole/${params?.data._id}`,
+                          pathname: `/app/CaseFinder/pdflist/editpdf/${params?.data._id}`,
                           data: params.data,
                         })
                       localStorage.setItem("PDFID",params.data._id)}
@@ -132,7 +132,6 @@ class RoleList extends React.Component {
     await axiosConfig
     .get("/pdf/view-pdf")
     .then((response) => {
-      console.log(response.data?.PDF)
      this.setState({ rowData: response?.data?.PDF });
     })
     .catch((error) => {
@@ -141,7 +140,6 @@ class RoleList extends React.Component {
   }
 
   runthisfunction(id) {
-    // console.log(id);
     let selectedData = this.gridApi.getSelectedRows();
     swal("Warning", "Sure You Want to Delete it", {
       buttons: {
@@ -151,8 +149,6 @@ class RoleList extends React.Component {
     }).then((value) => {
       switch (value) {
         case "delete":
-          // const formData = new FormData();
-          // formData.append("user_id", id);
           this.gridApi.updateRowData({ remove: selectedData });
           axiosConfig.delete(`/pdf/delete-pdf/${id}`).then((response) => {});
           break;
@@ -182,46 +178,7 @@ class RoleList extends React.Component {
       });
     }
   };
-  //   onChangeHandler = (event) => {
-  //     this.setState({ selectedFile: event.target.files[0] });
-  //     this.setState({ selectedName: event.target.files[0].name });
-  //     console.log(event.target.files[0]);
-  //   };
-  //   onChangeHandler = (event) => {
-  //     this.setState({ selectedFile: event.target.files });
-  //     this.setState({ selectedName: event.target.files.name });
-  //     console.log(event.target.files);
-  //   };
-  //   changeHandler1 = (e) => {
-  //     this.setState({ status: e.target.value });
-  //   };
-  //   changeHandler = (e) => {
-  //     this.setState({ [e.target.name]: e.target.value });
-  //   };
-  //   submitHandler = (e) => {
-  //     e.preventDefault();
-  //     const data = new FormData();
-  //     data.append("banner_title", this.state.banner_title);
-  //     data.append("bannertype", this.state.bannertype);
-  //     data.append("status", this.state.status);
-  //     for (const file of this.state.selectedFile) {
-  //       if (this.state.selectedFile !== null) {
-  //         data.append("banner_img", file, file.name);
-  //       }
-  //     }
-
-  //     axiosConfig
-  //       .post("/addbanner", data)
-  //       .then((response) => {
-  //         console.log(response);
-  //         swal("Successful!", "You clicked the button!", "success");
-  //         this.props.history.push("/app/freshlist/banner/bannerList");
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   };
-
+ 
   render() {
     const { rowData, columnDefs, defaultColDef } = this.state;
     return (
@@ -235,24 +192,9 @@ class RoleList extends React.Component {
               </Col>
               <div className="text-end ">
 
-                <Link to="/app/Trupee/account/Pdfform"><button type="button" className="btn btn-primary">Add PDF  </button></Link>
+                <Link to="/app/CaseFinder/pdf/addPdf"><button type="button" className="btn btn-primary">Add PDF  </button></Link>
                   </div>
-                 
- {/* <Col>
-                <Route
-                  render={({ history }) => (
-                    <Button
-                      className=" float-right"
-                      color="primary"
-                      onClick={() =>
-                        history.push("/app/freshlist/refundrequest/addRefund")
-                      }
-                    >
-                      Add Refund
-                    </Button>
-                  )}
-                />
-              </Col> */}
+   
             </Row>
             <CardBody>
               {this.state.rowData === null ? null : (

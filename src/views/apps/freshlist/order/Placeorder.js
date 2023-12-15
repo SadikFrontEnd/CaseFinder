@@ -219,7 +219,7 @@ class Placeorder extends React.Component {
       //             color="green"
       //             onClick={() =>
       //               history.push(
-      //                 `/app/freshlist/order/viewAll/${params.data.id}`
+      //                 ` /app/CaseFinder/users/User/${params.data.id}`
       //               )
       //             }
       //           />

@@ -1,5 +1,5 @@
 import React from "react";
-import {  Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import {
   Card,
@@ -52,54 +52,56 @@ class Advocate extends React.Component {
         headerName: "S.No",
         valueGetter: "node.rowIndex + 1",
         field: "node.rowIndex + 1",
-        width: 90,
+        width: 70,
         filter: true,
       },
-    
- {
+
+      {
         headerName: "Actions",
         field: "transactions",
-        width: 150,
+        width: 120,
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-            <BsTrash
-            className="mr-50"
-            size="25px"
-            color="red"
-            onClick={() => {
-              this.runthisfunction(params.data._id);
-            }}
-          />
-            <Route
-            render={({ history }) => (
-              <Eye
-              className="mr-50"
-              size="25px"
-              color="green"
-              onClick={() =>
-                history.push({pathname:`/app/Trupee/account/AdvocateView/${params.data._id}`,
-                data:params.data
+              <BsTrash
+                className="mr-50"
+                size="25px"
+                color="red"
+                onClick={() => {
+                  this.runthisfunction(params.data._id);
+                }}
+              />
+              <Route
+                render={({ history }) => (
+                  <Eye
+                    className="mr-50"
+                    size="25px"
+                    color="green"
+                    onClick={() =>
+                      history.push({
+                        pathname: `/app/CaseFinder/account/AdvocateListView/${params.data._id}`,
+                        data: params.data
 
-              })}
-            />
-          )}
-          />
-            <Route
-            render={({ history }) => (
-              <Edit
-              className="mr-50"
-              size="25px"
-              color="green"
-              onClick={() =>
-                history.push({pathname:`/app/Trupee/account/EditAdvocate/${params.data._id}`,
-                data:params.data
+                      })}
+                  />
+                )}
+              />
+              <Route
+                render={({ history }) => (
+                  <Edit
+                    className="mr-50"
+                    size="25px"
+                    color="green"
+                    onClick={() =>
+                      history.push({
+                        pathname: `/app/CaseFinder/advocate/EditAdvocate/${params.data._id}`,
+                        data: params.data
 
-              })}
-            />
-          )}
-          />
-             </div>
+                      })}
+                  />
+                )}
+              />
+            </div>
           );
         },
       },
@@ -108,7 +110,7 @@ class Advocate extends React.Component {
         field: "Name",
         filter: true,
         resizable: true,
-        width: 150,
+        width: 120,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
@@ -124,7 +126,7 @@ class Advocate extends React.Component {
         field: "phoneNo",
         filter: true,
         resizable: true,
-        width: 150,
+        width: 130,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
@@ -140,7 +142,7 @@ class Advocate extends React.Component {
         field: "services",
         filter: true,
         resizable: true,
-        width: 150,
+        width: 130,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
@@ -156,7 +158,7 @@ class Advocate extends React.Component {
         field: "email",
         filter: true,
         resizable: true,
-        width: 160,
+        width: 170,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
@@ -172,7 +174,7 @@ class Advocate extends React.Component {
         field: "Name",
         filter: true,
         resizable: true,
-        width: 160,
+        width: 120,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
@@ -183,14 +185,14 @@ class Advocate extends React.Component {
           );
         },
       },
-      
-      
+
+
       {
         headerName: "Enrollment",
         field: "Name",
         filter: true,
         resizable: true,
-        width: 160,
+        width: 140,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
@@ -206,12 +208,12 @@ class Advocate extends React.Component {
         field: "category",
         filter: true,
         resizable: true,
-        width: 160,
+        width: 150,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
               <div className="">
-                <span>{params?.data?.category }</span>
+                <span>{params?.data?.category}</span>
               </div>
             </div>
           );
@@ -222,7 +224,7 @@ class Advocate extends React.Component {
         field: "Subcategory",
         filter: true,
         resizable: true,
-        width: 160,
+        width: 150,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
@@ -233,24 +235,22 @@ class Advocate extends React.Component {
           );
         },
       },
-      
-   
+
+
     ],
   };
   async componentDidMount() {
     await axiosConfig
-    .get("/advocate/view-advocate")
-    .then((response) => {
-      console.log(response.data);
-     
-      this.setState({ rowData: response?.data?.Advocate });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      .get("/advocate/view-advocate")
+      .then((response) => {
+        this.setState({ rowData: response?.data?.Advocate });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
   };
-   
+
 
 
   runthisfunction(id) {
@@ -264,7 +264,7 @@ class Advocate extends React.Component {
       switch (value) {
         case "delete":
           this.gridApi.updateRowData({ remove: selectedData });
-          axiosConfig.delete(`/advocate/delete-advocate/${id}`).then((response) => {});
+          axiosConfig.delete(`/advocate/delete-advocate/${id}`).then((response) => { });
           break;
         default:
       }
@@ -303,15 +303,15 @@ class Advocate extends React.Component {
             <Row className="m-2">
               <Col>
                 <h1 className="float-left">Advocate List</h1>
-                
+
               </Col>
               <div className="text-end ">
 
-                <Link to="/app/Trupee/account/Advocateform"><button type="button" className="btn btn-primary">Add Advocate</button></Link>
-                  </div>
-                 
-                  
-             
+                <Link to="/app/CaseFinder/account/AdvocateListform"><button type="button" className="btn btn-primary">Add Advocate</button></Link>
+              </div>
+
+
+
             </Row>
             <CardBody>
               {this.state.rowData === null ? null : (
@@ -323,11 +323,11 @@ class Advocate extends React.Component {
                           {this.gridApi
                             ? this.state.currenPageSize
                             : "" * this.state.getPageSize -
-                              (this.state.getPageSize - 1)}{" "}
+                            (this.state.getPageSize - 1)}{" "}
                           -{" "}
                           {this.state.rowData.length -
                             this.state.currenPageSize * this.state.getPageSize >
-                          0
+                            0
                             ? this.state.currenPageSize * this.state.getPageSize
                             : this.state.rowData.length}{" "}
                           of {this.state.rowData.length}

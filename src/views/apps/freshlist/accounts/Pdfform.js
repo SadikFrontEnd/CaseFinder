@@ -1,25 +1,9 @@
 import React from "react";
 import {  Link } from 'react-router-dom';
 
-import {
-  Card,
-  CardBody,
-  Input,
-  Label,
-  Row,
-  CustomInput,
-  Col,
-  Form,
-  UncontrolledDropdown,
-  DropdownMenu,
-  DropdownItem,
-  DropdownToggle,
-  Button,
-} from "reactstrap";
 import UserContext from "../../../../context/Context";
 
 import axiosConfig from "../../../../axiosConfig";
-import { ContextLayout } from "../../../../utility/context/Layout";
 
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
@@ -27,7 +11,6 @@ import { Eye, Trash2, ChevronDown, Edit, Trash, Edit2 } from "react-feather";
 import { history } from "../../../../history";
 import "../../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../../assets/scss/pages/users.scss";
-import storage from "../firebase";
 import swal from "sweetalert";
 import { Route } from "react-router-dom";
 import { BsEye, BsTrash } from "react-icons/bs";
@@ -40,7 +23,6 @@ class Pdfform extends React.Component {
     Viewpermisson: null,
     Editpermisson: null,
     Createpermisson: null,
-    progress1:"",
     Deletepermisson: null,
     paginationPageSize: 20,
     currenPageSize: "",
@@ -106,7 +88,7 @@ class Pdfform extends React.Component {
                       color="blue"
                       onClick={() =>
                         history.push({
-                          pathname: `/app/freshlist/account/editRole/${params?.data}`,
+                          pathname: `/    app/CaseFinder/pdflist/editpdf/${params?.data}`,
                           data: params,
                         })
                       }
@@ -114,16 +96,7 @@ class Pdfform extends React.Component {
                   )}
                 />
               )}
-              {/* {this.state.Deletepermisson && (
-                <BsTrash
-                  className="mr-50"
-                  size="25px"
-                  color="red"
-                  onClick={() => {
-                    this.runthisfunction(params.data.id);
-                  }}
-                />
-              )} */}
+            
             </div>
           );
         },
@@ -154,9 +127,7 @@ class Pdfform extends React.Component {
     await axiosConfig
       .post("/getrolelist", formdata)
       .then((response) => {
-        // console.log(response.data?.data);
         const propertyNames = Object.values(response.data?.data);
-        // console.log(propertyNames);
         this.setState({ rowData: propertyNames });
       })
       .catch((error) => {
@@ -164,57 +135,8 @@ class Pdfform extends React.Component {
       });
   }
 
-   uploadImage = (x) => {
-    if (x !== "") {
-      const uploadTask = storage.ref(`images/${x.name}`).put(x);
+  
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          setProgress1(
-            Math.ceil((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
-          );
-        },
-        (error) => {
-          console.log(error);
-        },
-        () => {
-          storage
-            .ref("images")
-            .child(x.name)
-            .getDownloadURL()
-            .then((url) => {
-              setProgress1(0);
-
-              setPostData({ ...postData, pdf: url });
-            });
-        }
-      );
-    } else {
-      alert("No File selected");
-    }
-  };
-    
-  runthisfunction(id) {
-    // console.log(id);
-    let selectedData = this.gridApi.getSelectedRows();
-    swal("Warning", "Sure You Want to Delete it", {
-      buttons: {
-        cancel: "cancel",
-        catch: { text: "Delete ", value: "delete" },
-      },
-    }).then((value) => {
-      switch (value) {
-        case "delete":
-          const formData = new FormData();
-          formData.append("user_id", id);
-          this.gridApi.updateRowData({ remove: selectedData });
-          axiosConfig.post(`/userdelete`, formData).then((response) => {});
-          break;
-        default:
-      }
-    });
-  }
   onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -238,21 +160,16 @@ class Pdfform extends React.Component {
     }
   };
     onChangeHandler = (event) => {
-      console.log(event.target.files[0])
-      this.uploadImage(e.target.files[0])
       this.setState({ selectedFile: event.target.files[0] });
       this.setState({ selectedName: event.target.files[0].name });
-      console.log(event.target.files[0]);
     };
 
     changeHandler = (e) => {
-      console.log(e.target.value)
       this.setState({ [e.target.name]: e.target.value });
     };
     submitHandler = (e) => {
       e.preventDefault();
       const data = new FormData();
-      debugger;
       data.append("pdfName", this.state.PDFName);
     if (this.state.selectedFile !== null) {
           data.append("pdf", this.state.selectedFile);
@@ -262,12 +179,11 @@ class Pdfform extends React.Component {
       axiosConfig
         .post("/pdf/upload-pdf", data)
         .then((response) => {
-          console.log(response);
           swal("Successful!", "You clicked the button!", "success");
-          // this.props.history.push("/app/Trupee/account/RoleList");
+          this.props.history.push("/app/CaseFinder/account/PDFList");
         })
         .catch((error) => {
-          console.log(error);
+          swal("Error", "Something Went Wrong", "error");
         });
     };
 
@@ -281,7 +197,7 @@ class Pdfform extends React.Component {
       <h1 className='mb-5'>Add PDF</h1>
       </div>
       <div className='col-sm-2 col-md-2 col-xl-2 col-lg-2 '>
-      <Link to="/app/Trupee/account/RoleList"><button type="button" className="btn  btn-danger  ">Back</button></Link>
+      <Link to="/app/CaseFinder/account/PDFList"><button type="button" className="btn  btn-danger  ">Back</button></Link>
       </div>
       </div>
       
@@ -290,7 +206,7 @@ class Pdfform extends React.Component {
       <div className='row'>
       <div className='col-sm-5 col-md-5 col-lg-5 col-xl-5'>
   <div class="mb-3">
-    <label for="exampleInputEmail1" className="form-label ">PDF Name</label>
+    <label  className="form-label ">PDF Name</label>
     <input type="text" className="form-control w-75" name="PDFName" placeholder='Pdf Name' aria-describedby="emailHelp"
      onChange={this.changeHandler}
   
@@ -303,21 +219,7 @@ class Pdfform extends React.Component {
   <div className="mb-3">
     <label for="exampleInputPassword1" className="form-label">PDF Upload</label>
     <input type="file" className="form-control w-75" id="exampleInputPassword1"    onChange={this.onChangeHandler}/>
-    <div
-    style={{
-      height: 3,
-      width: "100%",
-      backgroundColor: "lightgrey",
-    }}
-  >
-    <div
-      style={{
-        height: 3,
-        width: `${progress1}%`,
-        backgroundColor: "green",
-      }}
-    ></div>
-  </div>
+ 
   </div>
   </div>
   <div className='col-sm-2 col-md-2 col-lg-2 col-xl-2'>

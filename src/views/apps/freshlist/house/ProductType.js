@@ -78,7 +78,7 @@ class ProductType extends React.Component {
             color="green"
             onClick={() =>
               history.push({
-                pathname: `/app/freshlist/order/viewAll/${params.data._id}`,
+                pathname: `/app/CaseFinder/users/User/${params.data._id}`,
                 data: params.data,
               })
             }

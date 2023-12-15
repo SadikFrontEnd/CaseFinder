@@ -60,7 +60,7 @@ const payload = {
           <Button
             className=" btn btn-danger float-right "
             onClick={() =>
-              history.push("/app/Trupee/account/Advocate")
+              history.push("/app/CaseFinder/account/AdvocateList")
             }
           >
             Back

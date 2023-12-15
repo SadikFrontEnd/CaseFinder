@@ -54,7 +54,7 @@ const navigationConfig = [
     type: "item",
     icon: <FaCircle size={8} />,
     permissions: ["admin", "editor"],
-    navLink: "/app/freshlist/house/userlist",
+    navLink: "/app/CaseFinder/user/userlist",
   },
   
   {
@@ -63,7 +63,7 @@ const navigationConfig = [
     type: "item",
     icon: <FaCircle size={8} />,
     permissions: ["admin", "editor"],
-    navLink: "/app/Trupee/account/RoleList",
+    navLink: "/app/CaseFinder/account/PDFList",
   },
   {
     id: "List",
@@ -71,7 +71,7 @@ const navigationConfig = [
     type: "item",
     icon: <FaCircle size={8} />,
     permissions: ["admin", "editor"],
-    navLink: "/app/Trupee/account/Advocate",
+    navLink: "/app/CaseFinder/account/AdvocateList",
   },
   {
     id: "subCategory",
@@ -79,7 +79,7 @@ const navigationConfig = [
     type: "item",
     icon: <FaCircle size={8} />,
     permissions: ["admin", "editor"],
-    navLink: "/app/Trupee/account/SubCategoryList",
+    navLink: "/app/CaseFinder/account/SubCategoryList",
   },
   {
     id: "logout",

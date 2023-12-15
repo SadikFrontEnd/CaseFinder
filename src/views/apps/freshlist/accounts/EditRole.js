@@ -54,7 +54,7 @@ export default function AddRoleNew({props}) {
           <Button
             className=" btn btn-danger float-right "
             onClick={() =>
-              history.push("/app/Trupee/account/RoleList")
+              history.push("/app/CaseFinder/account/PDFList")
             }
           >
             Back
@@ -65,7 +65,7 @@ export default function AddRoleNew({props}) {
       <Form onSubmit={handleSumit}>
         <div className="container mt-2">
           <Row className="mb-3 container">
-            <Col>
+            <Col lg="5" md="5" sm="12">
               <Label>PDF Name</Label>
               <Input
               type="text"
@@ -76,7 +76,7 @@ export default function AddRoleNew({props}) {
                 className="form-control"
               />
             </Col>
-            <Col>
+            <Col lg="5" md="5" sm="12">
               <Label>PDF File</Label>
               <Input
               type="file"
@@ -84,11 +84,14 @@ export default function AddRoleNew({props}) {
                 className="form-control"
               />
             </Col>
-          </Row>
-        </div>
-        <div className="mb-3 ">
+            <Col lg="2" md="2" sm="12">
+            <div className="mb-3 ">
         <button type="submit" className="btn btn-primary mt-2">Submit</button>
         </div>
+            </Col>
+          </Row>
+        </div>
+       
        </Form>
     </Card>
   </Col>

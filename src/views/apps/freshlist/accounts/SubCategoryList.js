@@ -43,7 +43,6 @@ class SubCategoryList extends React.Component {
     await axiosConfig
     .get("/advocate/view-advocate")
     .then((response) => {
-      console.log(response.data);
         this.setState({ rowData: response?.data?.Advocate });
     })
     .catch((error) => {
@@ -55,7 +54,6 @@ class SubCategoryList extends React.Component {
     await axiosConfig
     .get("/court/view-court")
     .then((response) => {
-      console.log(response?.data?.Court);
       this.setState({CatList:response?.data?.Court})
     })
     .catch((error) => {
@@ -72,13 +70,12 @@ class SubCategoryList extends React.Component {
 
   handleSubmit = (e)=>{
     e.preventDefault();
-    debugger;
     const payload= { court: this.state.category,
              subCategoryName:this.state.subcategory}
      axiosConfig
      .post("/court/save-sub-category", payload)
      .then((response) => {
-       console.log(response);
+      this.setState({subcategory:""})
        swal("Successful!", "You clicked the button!", "success");
      })
      .catch((error) => {

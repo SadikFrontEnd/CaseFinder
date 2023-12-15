@@ -1058,7 +1058,7 @@ class AppRouter extends React.Component {
             component={EditOrder}
           />
           <AppRoute
-            path="/app/freshlist/order/viewAll/:id"
+            path="/app/CaseFinder/users/User/:id"
             component={ViewAll}
           />
           <AppRoute path="/app/freshlist/order/pending" component={Pending} />
@@ -1303,17 +1303,17 @@ class AppRouter extends React.Component {
             path="/app/Trupee/account/CreateAccount"
             component={CreateAccount}
           />
-          <AppRoute path="/app/Trupee/account/RoleList" component={RoleList} />
+          <AppRoute path="/app/CaseFinder/account/PDFList" component={RoleList} />
           <AppRoute
-          path="/app/freshlist/account/editRole/:id"
+          path="/app/CaseFinder/pdflist/editpdf/:id"
           component={EditRole}
         />
-          <AppRoute path="/app/Trupee/account/Advocate" component={Advocate} />
-          <AppRoute path="/app/Trupee/account/SubCategoryList" component={SubCategoryList} />
-          <AppRoute path="/app/Trupee/account/Pdfform" component={Pdfform} />
-          <AppRoute path="/app/Trupee/account/Advocateform" component={Advocateform} />
-          <AppRoute path="/app/Trupee/account/AdvocateView/:id" component={ViewAdvocate} />
-          <AppRoute path="/app/Trupee/account/EditAdvocate/:id" component={EditAdvocate} />
+          <AppRoute path="/app/CaseFinder/account/AdvocateList" component={Advocate} />
+          <AppRoute path="/app/CaseFinder/account/SubCategoryList" component={SubCategoryList} />
+          <AppRoute path="/app/CaseFinder/pdf/addPdf" component={Pdfform} />
+          <AppRoute path="/app/CaseFinder/account/AdvocateListform" component={Advocateform} />
+          <AppRoute path="/app/CaseFinder/account/AdvocateListView/:id" component={ViewAdvocate} />
+          <AppRoute path="/app/CaseFinder/advocate/EditAdvocate/:id" component={EditAdvocate} />
          
           {/* inhouse Product */}
           <AppRoute
@@ -1380,7 +1380,7 @@ class AppRouter extends React.Component {
             component={ServiceMaster}
           />
           <AppRoute
-            path="/app/freshlist/house/userlist"
+            path="/app/CaseFinder/user/userlist"
             component={ProductType}                    
           />
           <AppRoute

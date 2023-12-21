@@ -96,7 +96,6 @@ class Pdfform extends React.Component {
                   )}
                 />
               )}
-            
             </div>
           );
         },
@@ -135,8 +134,6 @@ class Pdfform extends React.Component {
       });
   }
 
-  
-
   onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -159,77 +156,90 @@ class Pdfform extends React.Component {
       });
     }
   };
-    onChangeHandler = (event) => {
-      this.setState({ selectedFile: event.target.files[0] });
-      this.setState({ selectedName: event.target.files[0].name });
-    };
+  onChangeHandler = (event) => {
+    this.setState({ selectedFile: event.target.files[0] });
+    this.setState({ selectedName: event.target.files[0].name });
+  };
 
-    changeHandler = (e) => {
-      this.setState({ [e.target.name]: e.target.value });
-    };
-    submitHandler = (e) => {
-      e.preventDefault();
-      const data = new FormData();
-      data.append("pdfName", this.state.PDFName);
+  changeHandler = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  submitHandler = (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    data.append("pdfName", this.state.PDFName);
     if (this.state.selectedFile !== null) {
-          data.append("pdf", this.state.selectedFile);
-        }
-    
+      data.append("pdf", this.state.selectedFile);
+    }
 
-      axiosConfig
-        .post("/pdf/upload-pdf", data)
-        .then((response) => {
-          swal("Successful!", "You clicked the button!", "success");
-          this.props.history.push("/app/CaseFinder/account/PDFList");
-        })
-        .catch((error) => {
-          swal("Error", "Something Went Wrong", "error");
-        });
-    };
+    axiosConfig
+      .post("/pdf/upload-pdf", data)
+      .then((response) => {
+        swal("Successful!", "You clicked the button!", "success");
+        this.props.history.push("/app/CaseFinder/account/PDFList");
+      })
+      .catch((error) => {
+        swal("Error", "Something Went Wrong", "error");
+      });
+  };
 
   render() {
     const { rowData, columnDefs, defaultColDef } = this.state;
     return (
       <>
-      <div >
-      <div className='row'>
-      <div className='col-sm-10 col-md-10 col-xl-10 col-lg-10'>
-      <h1 className='mb-5'>Add PDF</h1>
-      </div>
-      <div className='col-sm-2 col-md-2 col-xl-2 col-lg-2 '>
-      <Link to="/app/CaseFinder/account/PDFList"><button type="button" className="btn  btn-danger  ">Back</button></Link>
-      </div>
-      </div>
-      
-             
-      <form onSubmit={this.submitHandler}>
-      <div className='row'>
-      <div className='col-sm-5 col-md-5 col-lg-5 col-xl-5'>
-  <div class="mb-3">
-    <label  className="form-label ">PDF Name</label>
-    <input type="text" className="form-control w-75" name="PDFName" placeholder='Pdf Name' aria-describedby="emailHelp"
-     onChange={this.changeHandler}
-  
-     
-     />
-    
-  </div>
-  </div>
-  <div className='col-sm-5 col-md-5 col-lg-5 col-xl-5'>
-  <div className="mb-3">
-    <label for="exampleInputPassword1" className="form-label">PDF Upload</label>
-    <input type="file" className="form-control w-75" id="exampleInputPassword1"    onChange={this.onChangeHandler}/>
- 
-  </div>
-  </div>
-  <div className='col-sm-2 col-md-2 col-lg-2 col-xl-2'>
-  <div className="mb-3 ">
-  <button type="submit" className="btn btn-primary mt-2">Submit</button>
-  </div>
-  </div>
-  </div>                
-</form>
-      </div>
+        <div>
+          <div className="row">
+            <div className="col-sm-10 col-md-10 col-xl-10 col-lg-10">
+              <h1 className="mb-5">Add PDF</h1>
+            </div>
+            <div className="col-sm-2 col-md-2 col-xl-2 col-lg-2 ">
+              <Link to="/app/CaseFinder/account/PDFList">
+                <button type="button" className="btn  btn-danger  ">
+                  Back
+                </button>
+              </Link>
+            </div>
+          </div>
+
+          <form onSubmit={this.submitHandler}>
+            <div className="row">
+              <div className="col-sm-5 col-md-5 col-lg-5 col-xl-5">
+                <div class="mb-3">
+                  <label className="form-label ">PDF Name</label>
+                  <input
+                    type="text"
+                    className="form-control w-75"
+                    name="PDFName"
+                    placeholder="Pdf Name"
+                    aria-describedby="emailHelp"
+                    onChange={this.changeHandler}
+                  />
+                </div>
+              </div>
+              <div className="col-sm-5 col-md-5 col-lg-5 col-xl-5">
+                <div className="mb-3">
+                  <label for="exampleInputPassword1" className="form-label">
+                    PDF Upload
+                  </label>
+                  <input
+                    type="file"
+                    className="form-control w-75"
+                    id="exampleInputPassword1"
+                    onChange={this.onChangeHandler}
+                  />
+                </div>
+              </div>
+              <div className="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                <div className="mb-3 ">
+                  <button type="submit" className="btn btn-primary mt-2">
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
       </>
     );
   }

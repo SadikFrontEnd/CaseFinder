@@ -1,5 +1,5 @@
 import React from "react";
-import {  Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 import {
   Card,
@@ -35,93 +35,100 @@ class SubCategoryList extends React.Component {
 
   state = {
     rowData: [],
-    CatList :[],
-   };
+    CatList: [],
+  };
 
-  
   async componentDidMount() {
     await axiosConfig
-    .get("/advocate/view-advocate")
-    .then((response) => {
+      .get("/advocate/view-advocate")
+      .then((response) => {
         this.setState({ rowData: response?.data?.Advocate });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
- };
-
- async componentDidMount() {
-    await axiosConfig
-    .get("/court/view-court")
-    .then((response) => {
-      this.setState({CatList:response?.data?.Court})
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
-   
-  changeHandler= (e)=>{
- const  {value,name}=  e.target
-    this.setState({[name]:value})
-    console.log(value)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
+  async componentDidMount() {
+    await axiosConfig
+      .get("/court/view-court")
+      .then((response) => {
+        this.setState({ CatList: response?.data?.Court });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
-  handleSubmit = (e)=>{
+  changeHandler = (e) => {
+    const { value, name } = e.target;
+    this.setState({ [name]: value });
+    console.log(value);
+  };
+
+  handleSubmit = (e) => {
     e.preventDefault();
-    const payload= { court: this.state.category,
-             subCategoryName:this.state.subcategory}
-     axiosConfig
-     .post("/court/save-sub-category", payload)
-     .then((response) => {
-      this.setState({subcategory:""})
-       swal("Successful!", "You clicked the button!", "success");
-     })
-     .catch((error) => {
-       console.log(error);
-     });
-   }
-
+    if (this.state.subcategory) {
+      const payload = {
+        court: this.state.category,
+        subCategoryName: this.state.subcategory,
+      };
+      axiosConfig
+        .post("/court/save-sub-category", payload)
+        .then((response) => {
+          this.setState({ subcategory: "" });
+          swal("Successful!", "You clicked the button!", "success");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      swal("Fill Both Fields");
+    }
+  };
 
   render() {
     return (
       <Row className="app-user-list">
         <Col sm="12">
           <Card>
-          <Row className="m-2">
-        
-          <Col lg="4" md="4" className="">
-          <Label>Category</Label>
-          <CustomInput
-            type="select"
-            placeholder="Select Category"
-            name="category"
-             value={this.state.category}
-            onChange={this.changeHandler}
-          >
-           <option  value="none">Select Category</option>
-         {
-            this.state.CatList.map((val)=>  <option  value={val._id}>{val.name}</option>)
-         }
-       </CustomInput>
-        </Col>
-    <Col lg="4" md="4" className="">
-        <Label>Sub Category</Label>
-       <Input type="text" name="subcategory" placeholder="Enter SubCategory Name"  onChange={this.changeHandler} />
-    </Col> 
-   
-        
-      <Col lg="4" md="4" className="mt-1">
-     
-   <Button type="submit" onClick={this.handleSubmit} color="primary"
-   >Submit</Button>
-  
-    </Col> 
-             
-          </Row>
-           
-        </Card>
+            <Row className="m-2">
+              <Col lg="4" md="4" className="">
+                <Label>Category *</Label>
+                <CustomInput
+                  type="select"
+                  placeholder="Select Category"
+                  name="category"
+                  required
+                  value={this.state.category}
+                  onChange={this.changeHandler}>
+                  <option value="none">Select Category</option>
+                  {this.state.CatList.map((val) => (
+                    <option value={val._id}>{val.name}</option>
+                  ))}
+                </CustomInput>
+              </Col>
+              <Col lg="4" md="4" className="">
+                <Label>Sub Category *</Label>
+                <Input
+                  type="text"
+                  required
+                  name="subcategory"
+                  placeholder="SubCategory Name"
+                  onChange={this.changeHandler}
+                />
+              </Col>
+
+              <Col lg="4" md="4" className="mt-1">
+                <Button
+                  type="submit"
+                  onClick={this.handleSubmit}
+                  color="primary">
+                  Submit
+                </Button>
+              </Col>
+            </Row>
+          </Card>
         </Col>
       </Row>
     );

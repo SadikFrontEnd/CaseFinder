@@ -1,5 +1,5 @@
 import React from "react";
-import {  Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 import UserContext from "../../../../context/Context";
 
@@ -208,24 +208,22 @@ class Pdfform extends React.Component {
                 <div class="mb-3">
                   <label className="form-label ">PDF Name</label>
                   <input
+                    required
                     type="text"
                     className="form-control w-75"
                     name="PDFName"
                     placeholder="Pdf Name"
-                    aria-describedby="emailHelp"
                     onChange={this.changeHandler}
                   />
                 </div>
               </div>
               <div className="col-sm-5 col-md-5 col-lg-5 col-xl-5">
                 <div className="mb-3">
-                  <label for="exampleInputPassword1" className="form-label">
-                    PDF Upload
-                  </label>
+                  <label className="form-label">PDF Upload</label>
                   <input
                     type="file"
+                    required
                     className="form-control w-75"
-                    id="exampleInputPassword1"
                     onChange={this.onChangeHandler}
                   />
                 </div>

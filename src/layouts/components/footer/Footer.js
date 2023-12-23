@@ -13,17 +13,15 @@ const Footer = (props) => {
           props.footerType === "static" ||
           !footerTypeArr.includes(props.footerType),
         "d-none": props.footerType === "hidden",
-      })}
-    >
+      })}>
       <p className="mb-0 clearfix">
         <span className="float-md-left d-block d-md-inline-block mt-25">
           COPYRIGHT © {new Date().getFullYear()}
           <a
-            href="https://themeforest.net/user/pixinvent/portfolio?ref=pixinvent"
+            // href="https://themeforest.net/user/pixinvent/portfolio?ref=pixinvent"
             target="_blank"
-            rel="noopener noreferrer"
-          >
-            Pravri,
+            rel="noopener noreferrer">
+            CaseFinder,
           </a>
           All rights reserved
         </span>

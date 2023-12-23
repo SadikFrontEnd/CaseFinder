@@ -140,10 +140,8 @@ class SubCategoryList extends React.Component {
     await axiosConfig
       .get("/court/view-court")
       .then((response) => {
-        console.log(response?.data?.Court);
         this.setState({ CatList: response?.data?.Court });
         this.setState({ allList: response?.data?.Court });
-        // this.setState({ rowData: response?.data?.Court[0].subCategory });
       })
       .catch((error) => {
         console.log(error);
@@ -152,17 +150,14 @@ class SubCategoryList extends React.Component {
   componentDidMount() {
     this.AllCourtList();
   }
-
   toggleDropdown = (data) => {
     const { subCategoryName, _id } = data;
     this.setState({ EditOneUserView: subCategoryName });
     this.setState({ secondData: _id });
-    console.log(data);
     this.setState((prevState) => ({ isOpen: !prevState.isOpen }));
   };
   changeHandler = (e) => {
     const { value, name } = e.target;
-    console.log(value, name);
     this.setState({ [name]: value });
   };
   changeHandlerSubCatList = (e) => {
@@ -170,9 +165,8 @@ class SubCategoryList extends React.Component {
     const selectedName =
       e.target.options[e.target.selectedIndex].getAttribute("data-name");
     const [_id] = selectedValue.split(":");
-    console.log(selectedName);
+
     const selectedCategory = this.state.allList.find((ele) => ele._id == _id);
-    console.log(selectedCategory);
 
     if (selectedCategory && selectedCategory.subCategory) {
       this.setState({ subTableCat: selectedCategory.subCategory });
@@ -183,7 +177,6 @@ class SubCategoryList extends React.Component {
   };
 
   handleSubCategory = (e) => {
-    console.log(e.target.value);
     this.setState({ EditOneUserView: e.target.value });
     this.AllCourtList();
   };
@@ -200,13 +193,11 @@ class SubCategoryList extends React.Component {
         payload
       )
       .then((response) => {
-        debugger;
-        this.AllCourtList();
-        swal("Successful!", "You clicked the button!", "success");
-        // this.setState({ main: "" });
+        this.setState({ rowData: response?.data.court?.subCategory });
         this.setState({ subCategoryName: "" });
         this.setState((prevState) => ({ isOpen: !prevState.isOpen }));
-        // this.AllCourtList();
+        this.setState({ rowData: selectedCategory.subCategory });
+        swal("Successful!", "You clicked the button!", "success");
       })
       .catch((error) => {
         console.log(error);
@@ -227,8 +218,6 @@ class SubCategoryList extends React.Component {
             subcategory: "",
             category: "",
           }));
-
-          // location.reload();
         })
         .catch((error) => {
           console.log(error);
@@ -244,7 +233,6 @@ class SubCategoryList extends React.Component {
     }));
   };
   runthisfunction(id) {
-    console.log(this.state.mainId, id);
     let selectedData = this.gridApi.getSelectedRows();
     swal("Warning", "Sure You Want to Delete it", {
       buttons: {
@@ -486,6 +474,7 @@ class SubCategoryList extends React.Component {
                 <Col lg="9" md="9" sm="12">
                   <Label>SubCategory</Label>
                   <Input
+                    required
                     type="text"
                     name="subCate"
                     value={this.state.EditOneUserView}
@@ -501,14 +490,6 @@ class SubCategoryList extends React.Component {
               </Row>
             </Form>
           </ModalBody>
-          {/* <ModalFooter>
-            <Button color="primary" onClick={toggle}>
-              Do Something
-            </Button>{" "}
-            <Button color="secondary" onClick={toggle}>
-              Cancel
-            </Button>
-          </ModalFooter> */}
         </Modal>
       </>
     );

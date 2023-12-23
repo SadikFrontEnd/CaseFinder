@@ -11,6 +11,7 @@ import {
 } from "reactstrap";
 import axiosConfig from "../../../../axiosConfig";
 import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 export default function EditAdvocate() {
   const [name, setName] = useState("");
   const [Email, setEmail] = useState("");
@@ -69,6 +70,7 @@ export default function EditAdvocate() {
       .put(`/advocate/update-advocate/${history?.location?.data._id}`, payload)
       .then((res) => {
         swal("Success", "Advocate Details Updated");
+        history.push("/app/CaseFinder/account/AdvocateList");
       })
       .catch((er) => {
         console.log(er);
@@ -76,7 +78,6 @@ export default function EditAdvocate() {
   };
 
   const handleCategoryChange = (e) => {
-    // debugger;
     const selectedValue = e.target.value;
     const selectedName =
       e.target.options[e.target.selectedIndex].getAttribute("data-name");
@@ -184,7 +185,7 @@ export default function EditAdvocate() {
                     />
                   </Col>
                   <Col lg="6" md="6" sm="12">
-                    <Label>Category </Label>
+                    <Label>Category *</Label>
                     <CustomInput
                       type="select"
                       placeholder="Select Category"
@@ -192,7 +193,6 @@ export default function EditAdvocate() {
                       name="category"
                       value={finalCategory}
                       onChange={handleCategoryChange}>
-                      <option value="">Select Category</option>
                       {list?.map((ele) => (
                         <option
                           key={ele._id}
@@ -205,7 +205,7 @@ export default function EditAdvocate() {
                   </Col>
 
                   <Col lg="6" md="6" sm="12">
-                    <Label>SubCategory </Label>
+                    <Label>SubCategory *</Label>
                     <CustomInput
                       type="select"
                       required
@@ -223,7 +223,7 @@ export default function EditAdvocate() {
                   </Col>
                 </Row>
               </div>
-              <div className="mb-3 ">
+              <div className="mb-3 ml-2">
                 <button type="submit" className="btn btn-primary mt-2">
                   Submit
                 </button>
